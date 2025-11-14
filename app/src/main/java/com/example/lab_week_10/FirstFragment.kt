@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.lab_week_10.database.TotalObject
 import com.example.lab_week_10.viewmodels.TotalViewModel
 
 class FirstFragment : Fragment() {
@@ -27,19 +28,16 @@ class FirstFragment : Fragment() {
         prepareViewModel()
     }
 
-    private fun updateText(total: Int) {
+    private fun updateText(totalObject: TotalObject) {
         view?.findViewById<TextView>(R.id.text_total)?.text =
-            getString(R.string.text_total, total)
+            getString(R.string.text_total, totalObject.value)
     }
 
     private fun prepareViewModel() {
         val viewModel =
             ViewModelProvider(requireActivity()).get(TotalViewModel::class.java)
 
-        // Observe the LiveData object
         viewModel.total.observe(viewLifecycleOwner) {
-            // Whenever the value of the LiveData object changes
-            // the updateText() is called, with the new value as the parameter
             updateText(it)
         }
     }
